@@ -1,68 +1,66 @@
 <!DOCTYPE html>
-<!--
-	NOTES:
-	1. All tokens are represented by '$' sign in the template.
-	2. You can write your code only wherever mentioned.
-	3. All occurrences of existing tokens will be replaced by their appropriate values.
-	4. Blank lines will be removed automatically.
-	5. Remove unnecessary comments before creating your template.
--->
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="authoring-tool" content="Adobe_Animate_CC">
-<title>B228_HTML5 Canvas</title>
-<!-- write your code here -->
-<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-<script src="B228_HTML5 Canvas.js"></script>
-<script>
-var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
-function init() {
-	canvas = document.getElementById("canvas");
-	anim_container = document.getElementById("animation_container");
-	dom_overlay_container = document.getElementById("dom_overlay_container");
-	var comp=AdobeAn.getComposition("4E04A7AAEDC748B88B0CE11EEEE417D4");
-	var lib=comp.getLibrary();
-	var loader = new createjs.LoadQueue(false);
-	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
-	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
-	var lib=comp.getLibrary();
-	loader.loadManifest(lib.properties.manifest);
-}
-function handleFileLoad(evt, comp) {
-	var images=comp.getImages();	
-	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
-}
-function handleComplete(evt,comp) {
-	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
-	var lib=comp.getLibrary();
-	var ss=comp.getSpriteSheet();
-	var queue = evt.target;
-	var ssMetadata = lib.ssMetadata;
-	for(i=0; i<ssMetadata.length; i++) {
-		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
-	}
-	exportRoot = new lib.B228_HTML5Canvas();
-	stage = new lib.Stage(canvas);	
-	//Registers the "tick" event listener.
-	fnStartAnimation = function() {
-		stage.addChild(exportRoot);
-		createjs.Ticker.framerate = lib.properties.fps;
-		createjs.Ticker.addEventListener("tick", stage);
-	}	    
-	//Code to support hidpi screens and responsive scaling.
-	AdobeAn.makeResponsive(false,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
-	AdobeAn.compositionLoaded(lib.properties.id);
-	fnStartAnimation();
-}
-</script>
-<!-- write your code here -->
+	<meta charset="UTF-8">
+	<title>B228作業05</title>
+	<style>
+		h4 {
+            color: red;
+        }
+        p {
+            margin: 5px;
+        }
+        div {
+            color: blue;
+        }
+	</style>
 </head>
-<body onload="init();" style="margin:0px;">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:686px; height:687px">
-		<canvas id="canvas" width="686" height="687" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
-		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:686px; height:687px; position: absolute; left: 0px; top: 0px; display: block;">
-		</div>
-	</div>
+<body>
+<script>
+	var myName = "簡珮丞";
+    var myAge = 19;
+    var myHeight = 158;
+    var myWeight = 38;
+
+    document.write("<p>1.我是B228, " + myName + "</p>");
+    document.write("<p><h4>2.大家好!我最喜歡吃的水果是草莓</h4></p>");
+    document.write("<div>以下為變數設定練習</div>");
+    document.write("<p>3.我是" + myName + " ,今年 " + myAge + "歲</p>");
+    document.write("<p>4.我的身高為" + myHeight + "公分, 我的體重為" + myWeight + "公斤</p>");
+    document.write("<p>5.所以我的BMI為" + (myWeight / Math.pow(myHeight / 100, 2)) + "</p>");
+
+    document.write("<div>以下for計次迴圈控制</div>");
+    var sum = 0;
+    for (var i=1; i<=100; i++){
+        sum += i;
+    }
+    document.write("<p>6.從1加到100的總和為" + sum + "</p>");
+
+    var count = 6;
+    function showSum(endNo){
+        var sum = 0;
+        for (var i=1; i<=endNo; i++){
+            sum += i;
+        }
+        count += 1;
+        document.write("<p>" + count + ".從1加到" + endNo + "的總和為" + sum + "</p>");
+    }
+
+    showSum(10);
+    showSum(100);
+    showSum(1000);
+    showSum(10000);
+
+    document.write("<div>以下為九九乘法表</div>");
+    function nTimesNTable(n){
+        for (var i=1; i<=n; i++){
+            for (var j=1; j<=n; j++){
+                document.write(i + "X" + j + "=" + (i*j) + " ");
+            }
+            document.write("<br>");
+        }
+    }
+    nTimesNTable(9);
+</script>
 </body>
 </html>
