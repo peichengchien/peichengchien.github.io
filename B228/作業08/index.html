@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>B228作業06</title>
+	<style>
+		div {
+            margin: 15px;
+            text-align: justify;
+            line-height: 30px;
+        }
+        h4 {
+            color: red;
+        }
+        lable {
+            color: red;
+            font-weight: bolder;
+        }
+        input {
+            color: brown;
+        }
+        td:nth-child(1){
+            color: blue;
+        }
+		 table {
+            width: 90%;
+            border-color: pink;
+            border-style:solid;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: center;
+            border-color: pink;
+            border-style:solid;
+        }
+        tr {
+           text-align: center;
+           border-color: pink;
+           border-style:solid;
+        }
+        td {
+            vertical-align: middle;
+            border-color: pink;
+            border-style:solid;
+        }
+	</style>
+</head>
+<body>
+<form id="form01" action="#" method="post">
+	<label>姓名: </label>
+	<input type="text" name="姓名:" value="簡珮丞"><br>
+	<label>收件住址: </label>
+	<input type="text" name="收件地址:" value="新北市樹林區復興路285號5樓"><br>
+	<label>電話: </label>
+	<input type="text" name="電話:" value="0979660383"><br>
+	<label>電子郵件: </label>
+	<input type="email" name="電子郵件:" value="peichengchien@gmail.com"><br>
+	<label>指定送貨日期: </label>
+	<input type="date" name="指定送貨日期:"><br>
+	<label>水果種類: (四選一)</label><br>
+	<input type="radio" name="fruit" id="fruit01" value="枋山愛文芒果(5斤)">枋山愛文芒果(5斤) 475元<br>
+	<input type="radio" name="fruit" id="fruit02" value="拉拉山巴陵部落水蜜桃(6顆)">拉拉山巴陵部落水蜜桃(6顆) 435元<br>
+	<input type="radio" name="fruit" id="fruit03" value="嘉義極光哈密瓜(2顆)">嘉義極光哈密瓜(2顆) 749元<br>
+	<input type="radio" name="fruit" id="fruit04" value="玉女小番茄(3斤)">玉女小番茄(3斤) 475元<br>
+</form>
+<br>
+<button onclick="shoppingInfo()" style="font-size: 18px;">結帳</button>
+<div id="demo"></div>
+
+<script>
+	function shoppingInfo() {
+        const x = document.getElementById("form01");
+        var item = "";
+        var price = 0;
+        var text = "<h4>您的購物資訊如下:</h4>";
+        text += "<table border='1'>";
+
+        // 取得表單的前五個欄位
+        for (let i = 0; i < 5; i++) {
+            text += "<tr>";
+            text += "<td>" + x.elements[i].name + "</td>";
+            text += "<td>" + x.elements[i].value + "</td>";
+            text += "</tr>";
+        }
+        for (let i = 5; i < 9; i++) {
+            if (x.elements[i].checked) {
+                fruitSelected = true;
+                item = x.elements[i].value.split(" ")[0]; // 取得水果名稱
+                price = parseInt(x.elements[i].value.match(/\d+/)[0]); // 取得價格
+                text += "<tr>";
+                text += "<td>水果種類: </td>";
+                text += "<td>" + item + "</td>";
+                text += "</tr>";
+                text += "<tr>";
+                text += "<td>價格合計: </td>";
+                text += "<td>" + price + "元</td>";
+                text += "</tr>";
+            }
+        }
+        if (!fruitSelected) {
+            text += "<tr>";
+            text += "<td colspan='2'>請選擇一種水果！</td>";
+            text += "</tr>";
+        }
+
+        text += "</table>";
+        document.getElementById("demo").innerHTML = text;
+    }
+</script>
+</body>
+</html>
