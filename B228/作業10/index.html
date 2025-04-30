@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>B228作業10</title>
+    <style>
+        div {
+            color: blue;
+            margin: 15px;
+            text-align: justify;
+            line-height: 30px;
+        }
+        h4 {
+            color: red;
+        }
+         }
+        lable {
+            color: red;
+            font-weight: bolder;
+        }
+        input {
+            color: brown;
+        }
+        td:nth-child(1){
+            color: blue;
+        }
+		 table {
+            width: 90%;
+            border-color: pink;
+            border-style:solid;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: center;
+            border-color: pink;
+            border-style:solid;
+        }
+        tr {
+           text-align: center;
+           border-color: pink;
+           border-style:solid;
+        }
+        td {
+            vertical-align: middle;
+            border-color: pink;
+            border-style:solid;
+        }
+    </style>
+</head>
+
+<body>
+<form id="form01">
+    姓名: <input type="text" name="name01" value="簡珮丞"><br>
+    收件地址: <input type="text" name="address01" value="新北市樹林區復興路285號5樓"><br>
+    電話: <input type="text" name="tel01" value="0979660383"><br>
+    電子郵件: <input type="email" name="email01" value="peichengchien@gmail.com"><br>
+    指定送貨日期: <input type="date" name="date01"><br>
+
+    水果種類:<br>
+    <input type="checkbox" name="fruit" id="fruit01" value="枋山愛文芒果(5斤)"> 枋山愛文芒果(5斤) 475元;
+    購買數量: <input type="number" name="number01" id="fruit01Num"><br>
+    <input type="checkbox" name="fruit" id="fruit02" value="拉拉山巴陵部落水蜜桃(6顆)"> 拉拉山巴陵部落水蜜桃(6顆) 435元;
+    購買數量: <input type="number" name="number02" id="fruit02Num"><br>
+    <input type="checkbox" name="fruit" id="fruit03" value="嘉義極光哈密瓜(2顆)"> 嘉義極光哈密瓜(2顆) 749元;
+    購買數量: <input type="number" name="number03" id="fruit03Num"><br>
+    <input type="checkbox" name="fruit" id="fruit04" value="玉女小番茄(3斤)"> 玉女小番茄(3斤) 475元;
+    購買數量: <input type="number" name="number04" id="fruit04Num"><br>
+</form>
+
+<br>
+<button id="submitBtn" onclick="shoppingInfo()"><h4>送出</h4></button>
+<div id="demo"></div>
+
+<script>
+    var text = "<h4>您的購物資訊如下:</h4>";
+    var sumToPay = 0;
+
+    // Fruit constructor
+    function Fruit(fruitType, fruitPrice, no) {
+        this.Type = fruitType;
+        this.Price = fruitPrice;
+        this.No = no;
+    }
+
+    // Subtotal calculation for each fruit
+    Fruit.prototype.subTotal = function () {
+        return this.Price * this.No;
+    };
+
+    var isSubmitted = false;
+
+    function shoppingInfo() {
+        var x = document.getElementById("form01");
+        var item = "";
+        sumToPay = 0;
+        text = "<h4>您的購物資訊如下:</h4>";
+        text += "<table>";
+
+        // Collect user info
+        for (var i = 0; i < 5; i++) {
+            switch (i) {
+                case 0: item = "姓名: "; break;
+                case 1: item = "收件地址: "; break;
+                case 2: item = "電話: "; break;
+                case 3: item = "電子郵件: "; break;
+                case 4: item = "指定送貨日期: "; break;
+            }
+            text += "<tr>";
+            text += "<td>" + item + "</td>" + "<td>" + x.elements[i].value + "</td>";
+            text += "</tr>";
+        }
+
+        // Create fruit objects with quantities
+        var fruit01 = new Fruit("枋山愛文芒果(5斤)", 475, parseInt(document.getElementById("fruit01Num").value) || 0);
+        var fruit02 = new Fruit("拉拉山巴陵部落水蜜桃(6顆)", 435, parseInt(document.getElementById("fruit02Num").value) || 0);
+        var fruit03 = new Fruit("嘉義極光哈密瓜(2顆)", 749, parseInt(document.getElementById("fruit03Num").value) || 0);
+        var fruit04 = new Fruit("玉女小番茄(3斤)", 475, parseInt(document.getElementById("fruit04Num").value) || 0);
+
+        // Loop through fruit checkboxes and calculate
+        if (document.getElementById("fruit01").checked) {
+            text += "<tr><td>" + fruit01.Type + "</td><td>數量: " + fruit01.No + "</td><td>小計: " + fruit01.subTotal() + "元</td></tr>";
+            sumToPay += fruit01.subTotal();
+        }
+
+        if (document.getElementById("fruit02").checked) {
+            text += "<tr><td>" + fruit02.Type + "</td><td>數量: " + fruit02.No + "</td><td>小計: " + fruit02.subTotal() + "元</td></tr>";
+            sumToPay += fruit02.subTotal();
+        }
+
+        if (document.getElementById("fruit03").checked) {
+            text += "<tr><td>" + fruit03.Type + "</td><td>數量: " + fruit03.No + "</td><td>小計: " + fruit03.subTotal() + "元</td></tr>";
+            sumToPay += fruit03.subTotal();
+        }
+
+        if (document.getElementById("fruit04").checked) {
+            text += "<tr><td>" + fruit04.Type + "</td><td>數量: " + fruit04.No + "</td><td>小計: " + fruit04.subTotal() + "元</td></tr>";
+            sumToPay += fruit04.subTotal();
+        }
+
+        text += "<tr><td>總計: </td><td>" + sumToPay + "元</td></tr>";
+        text += "</table>";
+        document.getElementById("demo").innerHTML = text;
+
+        // Change button text to "確認修正"
+        if (!isSubmitted) {
+            document.getElementById("submitBtn").innerHTML = "<h4>確認修正</h4>";
+            isSubmitted = true;
+        }
+    }
+</script>
+</body>
+
+</html>
